@@ -36,14 +36,22 @@
       </video>
       <div class="hero__content">
         <div class="hero__copy">
-          <h1 class="hero__title">
-            <span>Hey! I’m</span>
-            <span class="hero__name">Abdulrehman.</span>
-          </h1>
-          <p class="hero__subtitle"><em>“When the why is clear, the how is easy.”</em></p>
+          <div class="hero__title-card">
+            <h1 class="hero__title">
+              <span>Hey! I’m</span>
+              <span class="hero__name">Abdulrehman.</span>
+            </h1>
+          </div>
+          <div class="hero__quote-card">
+            <p>“When the why is clear, the how is easy.”</p>
+          </div>
           <div class="hero__actions">
-            <a class="hero__button hero__button--primary" href="#work">My work <span aria-hidden="true">↗</span></a>
-            <a class="hero__button hero__button--secondary" href="#contact">Contact me <span aria-hidden="true">↗</span></a>
+            <div class="hero__action-card">
+              <a class="hero__button hero__button--primary" href="#work">My work <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="hero__action-card">
+              <a class="hero__button hero__button--secondary" href="#contact">Contact me <span aria-hidden="true">↗</span></a>
+            </div>
           </div>
         </div>
       </div>
@@ -59,8 +67,12 @@
           <p class="projects-intro">Visit these projects hosted on Vercel. Select a project to open the live website.</p>
         </div>
 
+        <div class="projects-view-heading">
+          <p>01 <span>/</span> Large screens</p>
+          <h3 id="desktop-projects-title">Desktop view</h3>
+        </div>
         <div class="projects-scroll-area">
-          <div class="projects-carousel" aria-label="Selected live projects">
+          <div class="projects-carousel" aria-labelledby="desktop-projects-title">
             <div class="projects-window" tabindex="0" aria-label="Project previews. Use the arrow keys to change projects.">
               <div class="projects-track">
               <article class="project-card" aria-label="WebLaunch project" aria-hidden="false">
@@ -107,6 +119,48 @@
             </div>
           </div>
         </div>
+
+        <section class="projects-mobile" aria-labelledby="mobile-projects-title">
+          <div class="projects-view-heading">
+            <p>02 <span>/</span> Small screens</p>
+            <h3 id="mobile-projects-title">Mobile view</h3>
+          </div>
+          <div class="projects-mobile__grid">
+            <article class="projects-mobile__card">
+              <div class="projects-mobile__card-heading">
+                <h4>WebLaunch</h4>
+                <a href="https://web-launch-gules.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open WebLaunch website">↗</a>
+              </div>
+              <div class="projects-mobile__device">
+                <div class="projects-mobile__screen">
+                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                </div>
+              </div>
+            </article>
+            <article class="projects-mobile__card">
+              <div class="projects-mobile__card-heading">
+                <h4>CVSPAV1</h4>
+                <a href="https://cvspav1.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open CVSPAV1 website">↗</a>
+              </div>
+              <div class="projects-mobile__device">
+                <div class="projects-mobile__screen">
+                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                </div>
+              </div>
+            </article>
+            <article class="projects-mobile__card">
+              <div class="projects-mobile__card-heading">
+                <h4>Aero Throne</h4>
+                <a href="https://aero-throne-website.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Aero Throne website">↗</a>
+              </div>
+              <div class="projects-mobile__device">
+                <div class="projects-mobile__screen">
+                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
       </div>
     </section>
     <section class="about-section" id="about" aria-labelledby="about-title">
@@ -141,6 +195,72 @@
         </div>
       </div>
     </section>
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-section__inner">
+        <p class="contact-eyebrow"><span>04</span><i></i> Start a conversation</p>
+        <div class="contact-heading-row">
+          <h2 class="contact-title" id="contact-title">Book a <span>conversation.</span></h2>
+          <p class="contact-intro">Share a few details and a time that works for you. I’ll get back to you using your preferred contact method.</p>
+        </div>
+
+        <form class="contact-form" action="mailto:abdulrehmanmujahid1100@gmail.com" method="post" enctype="text/plain">
+          <div class="contact-form__grid">
+            <label class="contact-field">
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" placeholder="Your name" required>
+            </label>
+            <label class="contact-field">
+              <span>Email address</span>
+              <input name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+            </label>
+            <label class="contact-field">
+              <span>Phone number</span>
+              <input name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" required>
+            </label>
+            <label class="contact-field">
+              <span>Preferred way to connect</span>
+              <select name="preferred-contact" required>
+                <option value="" disabled selected>Select a contact method</option>
+                <option value="Email">Email</option>
+                <option value="Phone call">Phone call</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Video call">Video call</option>
+                <option value="LinkedIn">LinkedIn</option>
+              </select>
+            </label>
+            <label class="contact-field">
+              <span>Preferred date</span>
+              <input name="date" type="date" required>
+            </label>
+            <label class="contact-field">
+              <span>Preferred time <small>(your local time)</small></span>
+              <input name="time" type="time" required>
+            </label>
+            <label class="contact-field contact-field--wide">
+              <span>What would you like to discuss?</span>
+              <textarea name="message" rows="5" placeholder="Tell me a little about what you have in mind..." required></textarea>
+            </label>
+          </div>
+          <div class="contact-form__submit">
+            <p class="contact-form__note">Your details are prepared in your email app; this website does not store form submissions.</p>
+            <button class="contact-submit" type="submit">Connect with me <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="contact-form__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <a class="site-footer__brand" href="#home" aria-label="Back to top">AR<span>.</span></a>
+      <p class="site-footer__message">Thoughtful ideas, built for the web.</p>
+      <nav class="site-footer__links" aria-label="Social and contact links">
+        <a href="mailto:abdulrehmanmujahid1100@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/abdul-rahman-mujahid" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/Abdul-Rehman1100" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+      <p class="site-footer__copyright">&copy; 2026 Abdulrehman</p>
+    </div>
+  </footer>
 </body>
 </html>
