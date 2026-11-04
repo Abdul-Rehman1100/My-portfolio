@@ -6,7 +6,7 @@
 - Current page includes a full-screen video hero, glass navigation, a first-visit loading intro, a warm light-gradient project section, and an About section with expandable details.
 - The final contact section uses a warm light gradient and includes a conversation request form for name, email, phone, preferred contact method, date/time, and a message. The form opens a prefilled email draft to the portfolio owner; it does not store submissions. The footer links to email, LinkedIn, and GitHub.
 - Keep the video inside its hero section. Do not use it as a body background.
-- Hero greeting: “Hey! I’m Abdulrehman.” Keep the greeting in its own translucent glass card, followed by a quote card with “When the why is clear, the how is easy.”, then Work and Contact calls to action in two separate, smaller glass cards. Use high-contrast warm-red, gold, and cream button gradients, compact rounded-rectangle shapes, and a subtle lift/arrow hover effect. Keep all cards compact and clear of the character’s face; give them a side entrance and gentle floating motion. Scale the cards to the left-side safe area as the viewport narrows, keep CTA cards at different widths without overflow, and hide CTAs on phone-width screens. Honor reduced-motion preferences for all entrance and floating animations.
+- Hero greeting: “Hey, I’m Abdulrehman.” Show two centered glass cards near the bottom: a larger “Hey, I’m” card above a more compact Allura-script name card. Add three staggered glass stat cards on the right for Student at QU, 14 GitHub projects, and 6 live Vercel projects; vary their widths while aligning their right edges. Style the highlighted values in larger golden italic Playfair Display. Give all hero glass cards a subtle glow/scale hover treatment on pointer devices, and add a numbered vertical rail with a glowing gold ring moving through its three circular markers beside the stat cards. Hide the stat stack on phone-width screens to keep the greeting and character clear. Keep the corners subtly rounded, remove the quote and hero CTA cards, and honor reduced-motion preferences.
 
 ## Color palette
 
@@ -30,7 +30,7 @@ For translucent surfaces, use alpha variants of these colors. Maintain readable 
 - Keep body copy and navigation on the current system sans-serif stack.
 - Keep the design warm, creative, polished, and minimal.
 - Use rounded corners, restrained glass effects, soft borders, and smooth transitions.
-- The hero greeting uses cream text with a golden Allura script name accent. It overlays the left-center of the video on portrait screens and scales down with the compact hero.
+- The hero greeting uses cream text with a golden Allura script name accent. Its two glass cards sit centered near the bottom of the video and scale down with the compact hero.
 
 ## Hero video
 
@@ -70,7 +70,7 @@ For translucent surfaces, use alpha variants of these colors. Maintain readable 
 ## Responsive behavior
 
 - On landscape screens, the hero video fills the viewport. In portrait layouts, the hero keeps the 16:9 video ratio so the video does not become an overly tall crop.
-- In portrait layouts, the greeting stays over the video at the left and vertically centered, with its width and font size reduced for narrow screens to preserve a clear area around the character.
+- In portrait layouts, the greeting stays centered near the bottom of the video, with its width and font size reduced for narrow screens to preserve a clear area around the character.
 - Navbar changes to the hamburger layout at `640px`.
 - On narrow screens, reduce the navbar height, padding, logo, and hamburger control together while keeping the controls touch-friendly.
 - Prevent horizontal overflow on narrow screens and keep the logo and menu control visible.
