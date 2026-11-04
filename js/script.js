@@ -47,6 +47,16 @@
     });
   };
 
+  const initBackToTop = () => {
+    const backToTopButton = document.querySelector('.back-to-top');
+    backToTopButton?.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+      });
+    });
+  };
+
   const initVideoPlayback = () => {
     if (!video) return;
 
@@ -288,6 +298,7 @@
 
   const init = () => {
     initNavigation();
+    initBackToTop();
     initProjectCarousel();
     initVideoPlayback();
     initContactForm();
