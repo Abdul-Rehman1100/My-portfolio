@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080808">
+  <title>Video Scrub Hero</title>
+  <link rel="icon" type="image/webp" href="assets/images/ar_logo.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <main>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="site-nav__brand" href="#home" aria-label="AR home">
+        <img src="assets/images/ar_logo.webp" alt="AR">
+      </a>
+      <button class="site-nav__toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-links">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="site-nav__links" id="primary-links">
+        <a href="#home" aria-current="page">Home</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <section class="hero" id="home" aria-label="Video hero">
+      <video class="hero__video" muted autoplay loop playsinline preload="auto" aria-hidden="true">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+        Your browser does not support HTML video.
+      </video>
+      <div class="hero__content">
+        <div class="hero__copy">
+          <h1 class="hero__title">
+            <span>Hey! I’m</span>
+            <span class="hero__name">Abdulrehman.</span>
+          </h1>
+          <p class="hero__subtitle"><em>“When the why is clear, the how is easy.”</em></p>
+          <div class="hero__actions">
+            <a class="hero__button hero__button--primary" href="#work">My work <span aria-hidden="true">↗</span></a>
+            <a class="hero__button hero__button--secondary" href="#contact">Contact me <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="projects-section" id="work" aria-labelledby="projects-title">
+      <div class="projects-section__inner">
+        <p class="projects-eyebrow"><span>02</span><i></i> Live on the web</p>
+        <div class="projects-heading-row">
+          <h2 class="projects-title" id="projects-title">
+            <span class="projects-title__main">A few things,</span>
+            <span class="projects-title__accent">out in the world.</span>
+          </h2>
+          <p class="projects-intro">Visit these projects hosted on Vercel. Select a project to open the live website.</p>
+        </div>
+
+        <div class="projects-scroll-area">
+          <div class="projects-carousel" aria-label="Selected live projects">
+            <div class="projects-window" tabindex="0" aria-label="Project previews. Use the arrow keys to change projects.">
+              <div class="projects-track">
+              <article class="project-card" aria-label="WebLaunch project" aria-hidden="false">
+                <p class="project-card__eyebrow">Live site <span>· 01</span></p>
+                <div class="project-card__preview">
+                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <span class="project-card__preview-label">Live preview</span>
+                </div>
+                <div class="project-card__details">
+                  <div><h3>WebLaunch</h3><p>web-launch-gules.vercel.app</p></div>
+                  <a href="https://web-launch-gules.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open WebLaunch website">↗</a>
+                </div>
+              </article>
+              <article class="project-card" aria-label="CVSPAV1 project" aria-hidden="true" inert>
+                <p class="project-card__eyebrow">Live site <span>· 02</span></p>
+                <div class="project-card__preview">
+                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <span class="project-card__preview-label">Live preview</span>
+                </div>
+                <div class="project-card__details">
+                  <div><h3>CVSPAV1</h3><p>cvspav1.vercel.app</p></div>
+                  <a href="https://cvspav1.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open CVSPAV1 website">↗</a>
+                </div>
+              </article>
+              <article class="project-card" aria-label="Aero Throne project" aria-hidden="true" inert>
+                <p class="project-card__eyebrow">Live site <span>· 03</span></p>
+                <div class="project-card__preview">
+                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <span class="project-card__preview-label">Live preview</span>
+                </div>
+                <div class="project-card__details">
+                  <div><h3>Aero Throne</h3><p>aero-throne-website.vercel.app</p></div>
+                  <a href="https://aero-throne-website.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open Aero Throne website">↗</a>
+                </div>
+              </article>
+              </div>
+            </div>
+            <div class="projects-controls">
+              <p class="projects-count" aria-live="polite"><span class="projects-count__current">01</span><i></i><span>03</span></p>
+              <div class="projects-controls__buttons">
+                <button class="projects-arrow projects-arrow--previous" type="button" aria-label="Previous project">←</button>
+                <button class="projects-arrow projects-arrow--next" type="button" aria-label="Next project">→</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="about-section__inner">
+        <p class="about-eyebrow"><span>03</span><i></i> Get to know me</p>
+        <div class="about-heading-row">
+          <h2 class="about-title" id="about-title">A little about <span>me.</span></h2>
+          <p class="about-intro">Open a section to learn about my background, the work I enjoy, and what I hope to build.</p>
+        </div>
+
+        <div class="about-list" aria-label="About Abdulrehman">
+          <details class="about-item" open>
+            <summary><span class="about-item__number">01</span><span class="about-item__title">About me</span><span class="about-item__icon" aria-hidden="true"></span></summary>
+            <div class="about-item__panel"><p>I’m Abdulrehman, a Computer Science student and web developer. I enjoy turning ideas into thoughtful digital experiences and learning how each detail works.</p><p>I’m especially interested in front-end development, creative interactions, and building useful websites from the ground up.</p></div>
+          </details>
+          <details class="about-item">
+            <summary><span class="about-item__number">02</span><span class="about-item__title">My education</span><span class="about-item__icon" aria-hidden="true"></span></summary>
+            <div class="about-item__panel"><p>I’m studying Computer Science and growing my foundations in programming, software engineering, and problem solving through coursework and hands-on practice.</p><p>I pair what I learn in class with personal projects so I can apply new ideas to real interfaces.</p></div>
+          </details>
+          <details class="about-item">
+            <summary><span class="about-item__number">03</span><span class="about-item__title">About my projects</span><span class="about-item__icon" aria-hidden="true"></span></summary>
+            <div class="about-item__panel"><p>My projects let me explore responsive design, clear user experiences, and small details that make a site feel considered. The live examples are collected in the section above.</p><a href="#work">Explore my projects <span aria-hidden="true">↗</span></a></div>
+          </details>
+          <details class="about-item">
+            <summary><span class="about-item__number">04</span><span class="about-item__title">My vision</span><span class="about-item__icon" aria-hidden="true"></span></summary>
+            <div class="about-item__panel"><p>I want to create digital products that feel welcoming and work well for the people who use them, with thoughtful design supported by solid engineering.</p></div>
+          </details>
+          <details class="about-item">
+            <summary><span class="about-item__number">05</span><span class="about-item__title">My mission</span><span class="about-item__icon" aria-hidden="true"></span></summary>
+            <div class="about-item__panel"><p>My goal is to keep learning, take on meaningful challenges, and turn what I learn into practical websites and applications.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
