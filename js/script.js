@@ -236,64 +236,57 @@
     }
   };
 
-  const getHasPlayedIntro = () => {
-    try {
-      return sessionStorage.getItem('hero-intro-played') === 'true';
-    } catch {
-      return false;
-    }
-  };
-
   const initIntroLoader = () => {
-    if (getHasPlayedIntro() || !window.gsap || prefersReducedMotion.matches) return;
+    const loader = document.querySelector('.intro-loader');
+    const main = document.querySelector('main');
+    if (!loader || !main) return;
 
-    try {
-      sessionStorage.setItem('hero-intro-played', 'true');
-    } catch {
-      // Continue without persistent state when storage is unavailable.
-    }
-
-    const loader = document.createElement('div');
-    loader.className = 'intro-loader';
-    loader.setAttribute('aria-hidden', 'true');
-    loader.innerHTML = `
-      <div class="intro-loader__logo-wrap">
-        <svg class="intro-loader__ring" viewBox="0 0 120 120" aria-hidden="true">
-          <circle class="intro-loader__ring-track" cx="60" cy="60" r="52"></circle>
-          <circle class="intro-loader__ring-progress" cx="60" cy="60" r="52" transform="rotate(-90 60 60)"></circle>
-        </svg>
-        <img class="intro-loader__logo" src="assets/images/ar_logo.webp" alt="">
-      </div>
-      <div class="intro-loader__waves" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    `;
-
-    document.body.append(loader);
-
-    const ringProgress = loader.querySelector('.intro-loader__ring-progress');
-    const waves = loader.querySelectorAll('.intro-loader__waves span');
     const brand = nav?.querySelector('.site-nav__brand');
     const links = nav?.querySelectorAll('.site-nav__links a');
+    const pageLoad = document.readyState === 'complete'
+      ? Promise.resolve()
+      : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
+    const fontsReady = document.fonts?.ready ?? Promise.resolve();
+    const hasVideoSource = video && (video.currentSrc || video.hasAttribute('src') || video.querySelector('source[src]'));
+    const videoReady = !video
+      || video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+      || video.error
+      || !hasVideoSource
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+        video.addEventListener('loadeddata', resolve, { once: true });
+        video.addEventListener('error', resolve, { once: true });
+      });
 
-    gsap.set(nav, { autoAlpha: 0, y: -16 });
-    gsap.to(waves, { scaleY: 2.1, duration: 0.3, ease: 'sine.inOut', yoyo: true, repeat: 4, stagger: 0.08 });
+    Promise.all([pageLoad, fontsReady, videoReady]).then(() => {
+      main.setAttribute('aria-busy', 'false');
 
-    const introTimeline = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      onComplete: () => loader.remove(),
+      if (window.gsap && !prefersReducedMotion.matches) {
+        gsap.set(nav, { autoAlpha: 0, y: -16 });
+        const introTimeline = gsap.timeline({
+          defaults: { ease: 'power2.out' },
+          onComplete: () => loader.remove(),
+        });
+
+        introTimeline
+          .to(loader, { autoAlpha: 0, duration: 0.35 })
+          .fromTo(nav, { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.05)
+          .fromTo(brand, { x: -28, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45 }, 0.12)
+          .fromTo(links, { x: 28, autoAlpha: 0 }, {
+            x: 0,
+            autoAlpha: 1,
+            duration: 0.4,
+            stagger: { each: 0.07, from: 'end' },
+          }, 0.15);
+
+        document.body.classList.remove('is-loading');
+        return;
+      }
+
+      document.body.classList.remove('is-loading');
+      loader.classList.add('is-dismissed');
+      window.setTimeout(() => loader.remove(), 350);
     });
-
-    introTimeline
-      .to(ringProgress, { strokeDashoffset: 0, duration: 2.05, ease: 'power1.inOut' }, 0)
-      .to(loader, { autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, 1.8)
-      .fromTo(nav, { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 1.95)
-      .fromTo(brand, { x: -28, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.55, ease: 'power3.out' }, 2.05)
-      .fromTo(links, { x: 28, autoAlpha: 0 }, {
-        x: 0,
-        autoAlpha: 1,
-        duration: 0.45,
-        ease: 'power3.out',
-        stagger: { each: 0.09, from: 'end' },
-      }, 2.08);
   };
 
   const init = () => {

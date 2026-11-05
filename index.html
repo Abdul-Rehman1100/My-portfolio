@@ -13,8 +13,17 @@
   <script src="js/vendor/gsap.min.js" defer></script>
   <script src="js/script.js" defer></script>
 </head>
-<body>
-  <main>
+<body class="is-loading">
+  <div class="intro-loader" role="status">
+    <span class="intro-loader__label">Loading portfolio</span>
+    <div class="intro-loader__welcome">
+      <img src="assets/images/ar_logo.webp" alt="">
+      <p><span>Welcome to my</span><strong>Portfolio</strong></p>
+    </div>
+    <div class="intro-loader__eyes" aria-hidden="true"></div>
+    <div class="intro-loader__wave" aria-hidden="true"></div>
+  </div>
+  <main aria-busy="true">
     <nav class="site-nav" aria-label="Main navigation">
       <a class="site-nav__brand" href="#home" aria-label="AR home">
         <img src="assets/images/ar_logo.webp" alt="AR">
@@ -87,7 +96,7 @@
               <article class="project-card" aria-label="WebLaunch project" aria-hidden="false">
                 <p class="project-card__eyebrow">Live site <span>· 01</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
@@ -98,7 +107,7 @@
               <article class="project-card" aria-label="CVSPAV1 project" aria-hidden="true" inert>
                 <p class="project-card__eyebrow">Live site <span>· 02</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
@@ -109,7 +118,7 @@
               <article class="project-card" aria-label="Aero Throne project" aria-hidden="true" inert>
                 <p class="project-card__eyebrow">Live site <span>· 03</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne website preview" loading="eager" scrolling="no" tabindex="-1"></iframe>
+                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
