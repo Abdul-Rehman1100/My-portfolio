@@ -60,9 +60,45 @@
   const initVideoPlayback = () => {
     if (!video) return;
 
-    video.muted = true;
-    video.defaultMuted = true;
-    video.play().catch(() => {});
+    const playVideo = () => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.play().catch((error) => {
+        if (error.name !== 'NotAllowedError' && error.name !== 'AbortError') {
+          console.error('The hero video could not be played.', error);
+        }
+      });
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(playVideo, { timeout: 2000 });
+    } else {
+      window.setTimeout(playVideo, 500);
+    }
+  };
+
+  const initLazyProjectPreviews = () => {
+    const frames = document.querySelectorAll('iframe[data-src]');
+    const loadFrame = (frame) => {
+      frame.src = frame.dataset.src;
+      frame.removeAttribute('data-src');
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      frames.forEach(loadFrame);
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        loadFrame(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '200px 0px' });
+
+    frames.forEach((frame) => observer.observe(frame));
   };
 
   const initContactForm = () => {
@@ -243,23 +279,42 @@
 
     const brand = nav?.querySelector('.site-nav__brand');
     const links = nav?.querySelectorAll('.site-nav__links a');
-    const pageLoad = document.readyState === 'complete'
-      ? Promise.resolve()
-      : new Promise((resolve) => window.addEventListener('load', resolve, { once: true }));
-    const fontsReady = document.fonts?.ready ?? Promise.resolve();
-    const hasVideoSource = video && (video.currentSrc || video.hasAttribute('src') || video.querySelector('source[src]'));
-    const videoReady = !video
-      || video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-      || video.error
-      || !hasVideoSource
-      ? Promise.resolve()
-      : new Promise((resolve) => {
-        video.addEventListener('loadeddata', resolve, { once: true });
-        video.addEventListener('error', resolve, { once: true });
-      });
+    const logo = loader.querySelector('.intro-loader__welcome img');
+    const logoReady = new Promise((resolve) => {
+      if (!logo || logo.complete) {
+        if (logo && !logo.naturalWidth) {
+          console.error('The loading logo could not be loaded.', logo.src);
+        }
+        resolve();
+        return;
+      }
 
-    Promise.all([pageLoad, fontsReady, videoReady]).then(() => {
+      logo.addEventListener('load', resolve, { once: true });
+      logo.addEventListener('error', () => {
+        console.error('The loading logo could not be loaded.', logo.src);
+        resolve();
+      }, { once: true });
+    });
+    const fontsReady = document.fonts?.load('400 3rem Allura').catch((error) => {
+      console.error('The loading font could not be loaded.', error);
+    }) ?? Promise.resolve();
+    const posterReady = video?.poster
+      ? new Promise((resolve) => {
+        const poster = new Image();
+        poster.addEventListener('load', resolve, { once: true });
+        poster.addEventListener('error', () => {
+          console.error('The hero poster could not be loaded.', video.poster);
+          resolve();
+        }, { once: true });
+        poster.src = video.poster;
+        if (poster.complete) resolve();
+      })
+      : Promise.resolve();
+
+    Promise.all([logoReady, fontsReady, posterReady]).then(() => {
       main.setAttribute('aria-busy', 'false');
+      document.body.classList.remove('is-loading');
+      initVideoPlayback();
 
       if (window.gsap && !prefersReducedMotion.matches) {
         gsap.set(nav, { autoAlpha: 0, y: -16 });
@@ -279,11 +334,9 @@
             stagger: { each: 0.07, from: 'end' },
           }, 0.15);
 
-        document.body.classList.remove('is-loading');
         return;
       }
 
-      document.body.classList.remove('is-loading');
       loader.classList.add('is-dismissed');
       window.setTimeout(() => loader.remove(), 350);
     });
@@ -293,7 +346,7 @@
     initNavigation();
     initBackToTop();
     initProjectCarousel();
-    initVideoPlayback();
+    initLazyProjectPreviews();
     initContactForm();
     initIntroLoader();
   };

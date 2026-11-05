@@ -3,12 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080808">
-  <title>Video Scrub Hero</title>
-  <link rel="icon" type="image/webp" href="assets/images/ar_logo.webp">
+  <meta name="theme-color" content="#a20e06">
+  <meta name="description" content="Abdulrehman is a web developer and Computer Science student. Explore selected projects, learn about his work, and get in touch.">
+  <title>Abdulrehman | Web Developer Portfolio</title>
+  <link rel="icon" type="image/webp" href="assets/images/ar_logo.webp?v=2">
+  <link rel="preload" as="image" href="assets/images/hero-poster.webp" fetchpriority="high">
+  <link rel="preload" as="font" href="assets/fonts/Allura-Regular.ttf" type="font/ttf" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet"></noscript>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/vendor/gsap.min.js" defer></script>
   <script src="js/script.js" defer></script>
@@ -17,7 +21,7 @@
   <div class="intro-loader" role="status">
     <span class="intro-loader__label">Loading portfolio</span>
     <div class="intro-loader__welcome">
-      <img src="assets/images/ar_logo.webp" alt="">
+      <img src="assets/images/ar_logo.webp?v=2" alt="">
       <p><span>Welcome to my</span><strong>Portfolio</strong></p>
     </div>
     <div class="intro-loader__eyes" aria-hidden="true"></div>
@@ -26,7 +30,7 @@
   <main aria-busy="true">
     <nav class="site-nav" aria-label="Main navigation">
       <a class="site-nav__brand" href="#home" aria-label="AR home">
-        <img src="assets/images/ar_logo.webp" alt="AR">
+        <img src="assets/images/ar_logo.webp?v=2" alt="AR">
       </a>
       <button class="site-nav__toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-links">
         <span></span><span></span><span></span>
@@ -39,7 +43,7 @@
       </div>
     </nav>
     <section class="hero" id="home" aria-label="Video hero">
-      <video class="hero__video" muted autoplay loop playsinline preload="auto" aria-hidden="true">
+      <video class="hero__video" muted loop playsinline preload="none" poster="assets/images/hero-poster.webp" aria-hidden="true">
         <source src="assets/video/hero.mp4" type="video/mp4">
         Your browser does not support HTML video.
       </video>
@@ -96,7 +100,7 @@
               <article class="project-card" aria-label="WebLaunch project" aria-hidden="false">
                 <p class="project-card__eyebrow">Live site <span>· 01</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+                  <iframe data-src="https://web-launch-gules.vercel.app/" title="WebLaunch website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
@@ -107,7 +111,7 @@
               <article class="project-card" aria-label="CVSPAV1 project" aria-hidden="true" inert>
                 <p class="project-card__eyebrow">Live site <span>· 02</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+                  <iframe data-src="https://cvspav1.vercel.app/" title="CVSPAV1 website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
@@ -118,7 +122,7 @@
               <article class="project-card" aria-label="Aero Throne project" aria-hidden="true" inert>
                 <p class="project-card__eyebrow">Live site <span>· 03</span></p>
                 <div class="project-card__preview">
-                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+                  <iframe data-src="https://aero-throne-website.vercel.app/" title="Aero Throne website preview" loading="lazy" scrolling="no" tabindex="-1"></iframe>
                   <span class="project-card__preview-label">Live preview</span>
                 </div>
                 <div class="project-card__details">
@@ -151,7 +155,7 @@
               </div>
               <div class="projects-mobile__device">
                 <div class="projects-mobile__screen">
-                  <iframe src="https://web-launch-gules.vercel.app/" title="WebLaunch mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                  <iframe data-src="https://web-launch-gules.vercel.app/" title="WebLaunch mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
                 </div>
               </div>
             </article>
@@ -162,7 +166,7 @@
               </div>
               <div class="projects-mobile__device">
                 <div class="projects-mobile__screen">
-                  <iframe src="https://cvspav1.vercel.app/" title="CVSPAV1 mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                  <iframe data-src="https://cvspav1.vercel.app/" title="CVSPAV1 mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
                 </div>
               </div>
             </article>
@@ -173,7 +177,7 @@
               </div>
               <div class="projects-mobile__device">
                 <div class="projects-mobile__screen">
-                  <iframe src="https://aero-throne-website.vercel.app/" title="Aero Throne mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+                  <iframe data-src="https://aero-throne-website.vercel.app/" title="Aero Throne mobile website preview" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
                 </div>
               </div>
             </article>
@@ -221,7 +225,7 @@
           <p class="contact-intro">Share a few details and a time that works for you. I’ll get back to you using your preferred contact method.</p>
         </div>
 
-        <form class="contact-form" action="mailto:abdulrehmanmujahid1100@gmail.com" method="post" enctype="text/plain">
+        <form class="contact-form">
           <div class="contact-form__grid">
             <label class="contact-field">
               <span>Name</span>
@@ -265,6 +269,7 @@
           </div>
           <p class="contact-form__status" role="status" aria-live="polite"></p>
         </form>
+        <noscript><p class="contact-form__fallback">JavaScript is unavailable. <a href="mailto:abdulrehmanmujahid1100@gmail.com">Email me instead</a>.</p></noscript>
       </div>
     </section>
   </main>

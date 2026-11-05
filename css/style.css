@@ -1804,6 +1804,10 @@ h6 {
   .intro-loader {
     display: none;
   }
+
+  .contact-form {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
