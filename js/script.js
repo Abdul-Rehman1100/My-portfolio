@@ -77,6 +77,146 @@
     }
   };
 
+  const initHeroModel = () => {
+    const model = document.querySelector('.hero__model');
+    const hero = model?.closest('.hero');
+    if (!model || !hero) return;
+
+    window.addEventListener('portfolio:ready', () => {
+      const startModel = () => {
+        import('three')
+          .then(async (THREE) => {
+            const { GLTFLoader } = await import('three/addons/loaders/GLTFLoader.js');
+            const renderer = new THREE.WebGLRenderer({
+              canvas: model,
+              alpha: true,
+              antialias: true,
+              powerPreference: 'low-power',
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
+            camera.position.z = 7;
+            scene.add(new THREE.AmbientLight(0xffe2bd, 2));
+            const keyLight = new THREE.DirectionalLight(0xffffff, 3);
+            keyLight.position.set(-2, 4, 5);
+            scene.add(keyLight);
+
+            const loader = new GLTFLoader();
+            loader.load(
+              'assets/models/Orange_Fall_Leaves_optimized.glb',
+              ({ scene: leaves }) => {
+                const bounds = new THREE.Box3().setFromObject(leaves);
+                const size = bounds.getSize(new THREE.Vector3());
+                const center = bounds.getCenter(new THREE.Vector3());
+                leaves.position.sub(center);
+                leaves.scale.setScalar(1.7 / size.y);
+                const leafTemplate = new THREE.Group();
+                leafTemplate.add(leaves);
+                const fallingLeaves = [
+                  leafTemplate,
+                  leafTemplate.clone(true),
+                  leafTemplate.clone(true),
+                ];
+                fallingLeaves.forEach((leafGroup) => scene.add(leafGroup));
+
+                let width = 0;
+                let height = 0;
+                let frameId = 0;
+                let visible = false;
+                const clock = new THREE.Clock();
+
+                const resize = () => {
+                  const rect = hero.getBoundingClientRect();
+                  const nextWidth = rect.width;
+                  const nextHeight = rect.height;
+                  if (!nextWidth || !nextHeight || (width === nextWidth && height === nextHeight)) return;
+
+                  width = nextWidth;
+                  height = nextHeight;
+                  renderer.setSize(width, height, false);
+                  camera.aspect = width / height;
+                  camera.updateProjectionMatrix();
+                };
+
+                const draw = () => {
+                  frameId = 0;
+                  resize();
+                  if (!width || !height) return;
+
+                  const viewHeight = 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+                  const viewWidth = viewHeight * camera.aspect;
+                  const modelHeight = 1.7;
+                  const duration = 7;
+                  const elapsed = clock.getElapsedTime() / duration;
+                  fallingLeaves.forEach((leafGroup, index) => {
+                    leafGroup.visible = !prefersReducedMotion.matches || index === 0;
+                    const progress = (elapsed + index / fallingLeaves.length) % 1;
+                    const xDrift = prefersReducedMotion.matches
+                      ? 0
+                      : Math.sin(progress * Math.PI * 2) * viewWidth * 0.035;
+
+                    leafGroup.position.set(
+                      -viewWidth * (0.24 + index * 0.025) + xDrift,
+                      prefersReducedMotion.matches
+                        ? 0
+                        : viewHeight / 2 + modelHeight / 2 - progress * (viewHeight + modelHeight),
+                      0,
+                    );
+                    leafGroup.rotation.set(
+                      prefersReducedMotion.matches ? 0 : progress * Math.PI * 2,
+                      prefersReducedMotion.matches ? 0 : progress * Math.PI * 1.3,
+                      prefersReducedMotion.matches ? 0 : Math.sin(progress * Math.PI * 2) * 0.3,
+                    );
+                  });
+                  renderer.render(scene, camera);
+
+                  if (visible && !prefersReducedMotion.matches) {
+                    frameId = window.requestAnimationFrame(draw);
+                  }
+                };
+
+                const setVisible = (isVisible) => {
+                  visible = isVisible;
+                  clock.start();
+                  if (visible && !frameId) draw();
+                  if (!visible && frameId) {
+                    window.cancelAnimationFrame(frameId);
+                    frameId = 0;
+                  }
+                };
+
+                const visibilityObserver = new IntersectionObserver(([entry]) => {
+                  setVisible(entry.isIntersecting);
+                });
+                visibilityObserver.observe(hero);
+                new ResizeObserver(() => {
+                  resize();
+                  if (visible && prefersReducedMotion.matches) draw();
+                }).observe(hero);
+                prefersReducedMotion.addEventListener('change', draw);
+                resize();
+              },
+              undefined,
+              (error) => console.error('The hero 3D model could not be loaded.', error),
+            );
+          })
+          .catch((error) => {
+            console.error('Three.js could not be loaded for the hero model.', error);
+          });
+      };
+
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(startModel, { timeout: 1500 });
+      } else {
+        window.setTimeout(startModel, 300);
+      }
+    }, { once: true });
+  };
+
   const initHeroStats = () => {
     const stats = document.querySelector('.hero__stats');
     const index = stats?.querySelector('.hero__stat-index');
@@ -345,6 +485,7 @@
 
     Promise.all([logoReady, fontsReady, posterReady]).then(() => {
       main.setAttribute('aria-busy', 'false');
+      window.dispatchEvent(new Event('portfolio:ready'));
 
       if (window.gsap && !prefersReducedMotion.matches) {
         gsap.set(video?.closest('.hero'), { x: '-100vw', autoAlpha: 0, scale: 0.98 });
@@ -407,6 +548,7 @@
   const init = () => {
     initNavigation();
     initBackToTop();
+    initHeroModel();
     initHeroStats();
     initProjectCarousel();
     initLazyProjectPreviews();

@@ -1131,6 +1131,17 @@ h6 {
   pointer-events: none;
 }
 
+.hero__model {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+}
+
 .hero__content {
   position: absolute;
   z-index: 2;
@@ -1949,7 +1960,8 @@ h6 {
   .hero__greeting-card,
   .hero__title-card,
   .hero__title-card::after,
-  .hero__stat-card {
+  .hero__stat-card,
+  .hero__model.is-ready {
     animation: none;
   }
 
@@ -2007,6 +2019,7 @@ h6 {
     object-fit: cover;
     object-position: center;
   }
+
 }
 
 @media (max-width: 760px) {
