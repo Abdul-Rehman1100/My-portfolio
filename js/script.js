@@ -77,6 +77,38 @@
     }
   };
 
+  const initHeroStats = () => {
+    const stats = document.querySelector('.hero__stats');
+    const index = stats?.querySelector('.hero__stat-index');
+    const buttons = [...(index?.querySelectorAll('button[aria-controls]') ?? [])];
+    if (!stats || !buttons.length) return;
+
+    const cards = buttons
+      .map((button) => document.getElementById(button.getAttribute('aria-controls')))
+      .filter(Boolean);
+    const mobileQuery = window.matchMedia('(max-width: 760px)');
+    let activeIndex = -1;
+
+    const updateActiveStat = (nextIndex) => {
+      activeIndex = nextIndex;
+      buttons.forEach((button, indexValue) => {
+        const isActive = indexValue === activeIndex;
+        button.setAttribute('aria-expanded', String(isActive));
+        cards[indexValue].classList.toggle('is-mobile-active', isActive && mobileQuery.matches);
+        cards[indexValue].setAttribute('aria-hidden', String(mobileQuery.matches && !isActive));
+      });
+    };
+
+    buttons.forEach((button, indexValue) => {
+      button.addEventListener('click', () => {
+        updateActiveStat(activeIndex === indexValue ? -1 : indexValue);
+      });
+    });
+
+    mobileQuery.addEventListener('change', () => updateActiveStat(-1));
+    updateActiveStat(-1);
+  };
+
   const initLazyProjectPreviews = () => {
     const frames = document.querySelectorAll('iframe[data-src]');
     const loadFrame = (frame) => {
@@ -313,26 +345,56 @@
 
     Promise.all([logoReady, fontsReady, posterReady]).then(() => {
       main.setAttribute('aria-busy', 'false');
+
+      if (window.gsap && !prefersReducedMotion.matches) {
+        gsap.set(video?.closest('.hero'), { x: '-100vw', autoAlpha: 0, scale: 0.98 });
+        gsap.set(nav, { autoAlpha: 0, y: -16 });
+        gsap.set(loader, { x: 0 });
+        document.body.classList.add('is-transitioning');
+      }
+
       document.body.classList.remove('is-loading');
       initVideoPlayback();
 
       if (window.gsap && !prefersReducedMotion.matches) {
-        gsap.set(nav, { autoAlpha: 0, y: -16 });
         const introTimeline = gsap.timeline({
-          defaults: { ease: 'power2.out' },
-          onComplete: () => loader.remove(),
+          defaults: { ease: 'power3.out' },
+          onComplete: () => {
+            loader.remove();
+            document.body.classList.remove('is-transitioning');
+          },
         });
 
         introTimeline
-          .to(loader, { autoAlpha: 0, duration: 0.35 })
-          .fromTo(nav, { autoAlpha: 0, y: -16 }, { autoAlpha: 1, y: 0, duration: 0.45 }, 0.05)
-          .fromTo(brand, { x: -28, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45 }, 0.12)
-          .fromTo(links, { x: 28, autoAlpha: 0 }, {
+          .to(loader, { x: '100%', autoAlpha: 0, duration: 1, ease: 'power4.inOut' })
+          .fromTo(video?.closest('.hero'), {
+            x: '-100vw',
+            autoAlpha: 0,
+            scale: 0.98,
+          }, {
             x: 0,
             autoAlpha: 1,
-            duration: 0.4,
+            scale: 1,
+            duration: 0.95,
+            ease: 'power4.out',
+          }, 0.08)
+          .fromTo(nav, { autoAlpha: 0, y: -16 }, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+          }, 0.52)
+          .fromTo(brand, { x: -18, autoAlpha: 0 }, {
+            x: 0,
+            autoAlpha: 1,
+            duration: 0.45,
+          }, 0.62)
+          .fromTo(links, { x: 24, autoAlpha: 0 }, {
+            x: 0,
+            autoAlpha: 1,
+            duration: 0.45,
             stagger: { each: 0.07, from: 'end' },
-          }, 0.15);
+          }, 0.64);
 
         return;
       }
@@ -345,6 +407,7 @@
   const init = () => {
     initNavigation();
     initBackToTop();
+    initHeroStats();
     initProjectCarousel();
     initLazyProjectPreviews();
     initContactForm();

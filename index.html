@@ -59,21 +59,21 @@
           </div>
         </div>
         <aside class="hero__stats" aria-label="Portfolio highlights">
-          <div class="hero__stat-card hero__stat-card--student">
+          <div class="hero__stat-card hero__stat-card--student" id="hero-stat-education">
             <p class="hero__stat-label">Education</p>
             <p class="hero__stat-value">Student at <strong>QU</strong></p>
           </div>
-          <div class="hero__stat-card hero__stat-card--github">
+          <div class="hero__stat-card hero__stat-card--github" id="hero-stat-projects">
             <p class="hero__stat-value"><strong>14</strong> GitHub projects</p>
           </div>
-          <div class="hero__stat-card hero__stat-card--vercel">
+          <div class="hero__stat-card hero__stat-card--vercel" id="hero-stat-live">
             <p class="hero__stat-value"><strong>6</strong> live projects</p>
             <p class="hero__stat-label">on Vercel</p>
           </div>
-          <ol class="hero__stat-index" aria-hidden="true">
-            <li>01</li>
-            <li>02</li>
-            <li>03</li>
+          <ol class="hero__stat-index" aria-label="Portfolio highlights">
+            <li><button type="button" aria-label="Show education highlight" aria-controls="hero-stat-education" aria-expanded="false">01</button></li>
+            <li><button type="button" aria-label="Show project highlight" aria-controls="hero-stat-projects" aria-expanded="false">02</button></li>
+            <li><button type="button" aria-label="Show live projects highlight" aria-controls="hero-stat-live" aria-expanded="false">03</button></li>
           </ol>
         </aside>
       </div>
