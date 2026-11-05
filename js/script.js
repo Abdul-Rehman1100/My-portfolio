@@ -273,6 +273,47 @@
     frames.forEach((frame) => observer.observe(frame));
   };
 
+  const initMobileProjectPreviews = () => {
+    const screens = [...document.querySelectorAll('.projects-mobile__screen')];
+    const resizePreview = (screen) => {
+      const frame = screen.querySelector('iframe');
+      if (!frame || !screen.clientWidth) return;
+
+      frame.style.setProperty('--preview-scale', String(screen.clientWidth / 375));
+    };
+
+    screens.forEach((screen) => {
+      resizePreview(screen);
+
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => resizePreview(screen)).observe(screen);
+      }
+    });
+
+    if (!('ResizeObserver' in window)) {
+      window.addEventListener('resize', () => screens.forEach(resizePreview), { passive: true });
+    }
+
+    const mobileCards = [...document.querySelectorAll('.projects-mobile__card')];
+    if (!mobileCards.length || !('IntersectionObserver' in window) || prefersReducedMotion.matches) return;
+
+    mobileCards.forEach((card, index) => {
+      card.style.setProperty('--card-index', String(index));
+    });
+    document.body.classList.add('projects-card-reveals-ready');
+
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add('is-visible');
+        cardObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    mobileCards.forEach((card) => cardObserver.observe(card));
+  };
+
   const initContactForm = () => {
     if (!contactForm) return;
 
@@ -360,6 +401,7 @@
         const isActive = slideIndex === activeProject;
         slide.setAttribute('aria-hidden', String(!isActive));
         slide.inert = !isActive;
+        slide.classList.toggle('is-active', isActive);
       });
 
       if (projectCount) {
@@ -552,6 +594,7 @@
     initHeroStats();
     initProjectCarousel();
     initLazyProjectPreviews();
+    initMobileProjectPreviews();
     initContactForm();
     initIntroLoader();
   };

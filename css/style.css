@@ -218,6 +218,16 @@ h6 {
   box-shadow: 0 14px 40px rgb(38 35 35 / 7%), inset 0 1px 0 rgb(255 255 255 / 75%);
 }
 
+body.projects-card-reveals-ready .projects-mobile__card:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+}
+
+.projects-mobile__card.is-visible {
+  animation: project-card-enter 680ms cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: calc(var(--card-index, 0) * 110ms);
+}
+
 .projects-mobile__card-heading {
   display: flex;
   align-items: center;
@@ -262,7 +272,7 @@ h6 {
 }
 
 .projects-mobile__device {
-  width: min(100%, 260px);
+  width: min(100%, 320px);
   aspect-ratio: 9 / 19;
   margin-inline: auto;
   padding: 8px;
@@ -297,10 +307,15 @@ h6 {
 }
 
 .projects-mobile__screen iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 375px;
+  height: 812px;
   border: 0;
+  transform: scale(var(--preview-scale, 1));
+  transform-origin: top left;
 }
 
 /* About section */
@@ -869,6 +884,21 @@ h6 {
   background: rgb(255 255 255 / 48%);
 }
 
+.project-card.is-active {
+  animation: project-card-enter 680ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+@keyframes project-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .project-card__eyebrow {
   flex: 0 0 auto;
   margin: 0 0 0.35rem;
@@ -1060,7 +1090,7 @@ h6 {
   }
 
   .projects-mobile__device {
-    width: min(100%, 250px);
+    width: min(100%, 320px);
   }
 
   .projects-carousel {
@@ -1992,6 +2022,13 @@ h6 {
 
   .back-to-top {
     transition: none;
+  }
+
+  .projects-mobile__card,
+  .project-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
